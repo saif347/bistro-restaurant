@@ -18,7 +18,6 @@ const Testimonials = () => {
             .then(response => response.json())
             .then(data => setTestimonials(data))
     }, [])
-    console.log(testimonials)
     return (
         <section className="my-16 max-w-7xl mx-auto">
             <SectionTitle subHeading={'what Our Clients say'} heading={'Testimonials'}></SectionTitle>

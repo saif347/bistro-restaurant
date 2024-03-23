@@ -5,17 +5,12 @@ import menuDesert from '../../../assets/assets/menu/dessert-bg.jpeg'
 import menuPizza from '../../../assets/assets/menu/pizza-bg.jpg'
 import menuSalad from '../../../assets/assets/menu/salad-bg.jpg'
 import menuSoup from '../../../assets/assets/menu/soup-bg.jpg'
-import useMenu from '../../../hooks/useMenu';
 import SectionTitle from '../../../components/sectiontitle/SectionTitle';
 import MenuCategory from '../menuCategory/MenuCategory';
+import useCategory from '../../../hooks/categoryHooks/useCategory';
 
 const Menu = () => {
-    const [menu] = useMenu();
-    const offered = menu.filter(item => item.category === 'offered');
-    const desert = menu.filter(item => item.category === 'dessert');
-    const pizza = menu.filter(item => item.category === 'pizza');
-    const salad = menu.filter(item => item.category === 'salad');
-    const soup = menu.filter(item => item.category === 'soup');
+    const [pizza,  dessert, soup, salad, offered] = useCategory()
 
     return (
         <div>
@@ -34,19 +29,19 @@ const Menu = () => {
             </section>
             {/* desert item */}
             <section className='my-10 '>
-                 <MenuCategory items={desert} img={menuDesert} title={'DESERT'}></MenuCategory>
+                 <MenuCategory items={dessert} img={menuDesert} title={'dessert'}></MenuCategory>
             </section>
             {/*  pizza item */}
             <section className='my-10 '>
-                 <MenuCategory items={pizza} img={menuPizza} title={'PIZZA'}></MenuCategory>
+                 <MenuCategory items={pizza} img={menuPizza} title={'pizza'}></MenuCategory>
             </section>
             {/*  salad */}
             <section className='my-10 '>
-                 <MenuCategory items={salad} img={menuSalad} title={'SALAD'}></MenuCategory>
+                 <MenuCategory items={salad} img={menuSalad} title={'salad'}></MenuCategory>
             </section>
             {/*  soup */}
             <section className='my-10 '>
-                 <MenuCategory items={soup} img={menuSoup} title={'SOUP'}></MenuCategory>
+                 <MenuCategory items={soup} img={menuSoup} title={'soup'}></MenuCategory>
             </section>
 
         </div>

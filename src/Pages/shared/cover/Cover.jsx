@@ -12,7 +12,7 @@ const Cover = ({ img, coverTitle, coverText }) => {
             <div className="hero h-[400px] lg:h-[700px]">
                 <div className="hero-content text-center lg:w-[1280px] lg:h-[400px] bg-black bg-opacity-50">
                     <div className=" text-white">
-                        <h1 className="mb-3 lg:mb-5 text-5xl font-bold">{coverTitle}</h1>
+                        <h1 className="mb-3 lg:mb-5 text-5xl font-bold uppercase">{coverTitle}</h1>
                         <p className="mb-5 max-w-3xl">{coverText}</p>
                     </div>
                 </div>
