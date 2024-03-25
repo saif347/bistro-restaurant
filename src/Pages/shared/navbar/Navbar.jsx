@@ -1,12 +1,18 @@
 import { Link, NavLink } from "react-router-dom";
 import profile from '../../../assets/assets/others/profile.png'
-import cart from '../../../assets/assets/icon/151-1511569_cart-notifications-free-shopping-cart-favicon-hd-png-removebg-preview.png'
+import cartImg from '../../../assets/assets/icon/151-1511569_cart-notifications-free-shopping-cart-favicon-hd-png-removebg-preview.png'
 import './navbar.css'
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { MdOutlineCancel } from "react-icons/md";
+import { GlobalContext } from "../../../Provider/AuthProvider";
+import Swal from 'sweetalert2'
+import useCart from "../../../hooks/useCart";
+
 
 const Navbar = () => {
     const [showMenu, setShowMenu] = useState(false);
+    const { logOut, user } = useContext(GlobalContext)
+    const [cart]= useCart()
     const links = <>
         <li className="nav-link"><NavLink to={'/'}>Home</NavLink></li>
         <li className="nav-link"><NavLink to={'contact'}>Contact Us</NavLink></li>
@@ -14,6 +20,21 @@ const Navbar = () => {
         <li className="nav-link"><NavLink to={'/menu'}>Our Menu</NavLink></li>
         <li className="nav-link"><NavLink to={'/shop/salad'}>Our Shop</NavLink></li>
     </>
+
+    const handleLogout = () => {
+        logOut()
+            .then(() => {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "log out successful",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            })
+            .catch(err => console.error(err))
+
+    }
     return (
         <div className="navbar fixed z-10 bg-opacity-60 justify-between bg-[#151515] text-[#ffffff] px-1 lg:px-10">
             <div className="navbar-start">
@@ -45,8 +66,8 @@ const Navbar = () => {
                 <div className="dropdown dropdown-end">
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
                         <div className="indicator">
-                            <img className="w-8 md:w-10 lg:w-10 rounded-full" src={cart} alt="" />
-                            <span className="badge badge-sm indicator-item">8</span>
+                            <img className="w-8 md:w-10 lg:w-10 rounded-full" src={cartImg} alt="" />
+                            <span className="badge badge-sm indicator-item">{cart.length}</span>
                         </div>
                     </div>
                     <div tabIndex={0} className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow">
@@ -62,7 +83,12 @@ const Navbar = () => {
                 <div className="ml-4 ">
                     <div className=" flex justify-center items-center space-x-2">
                         <div>
-                            <Link to={'/login'}> <button>Sign In</button></Link>
+                            {
+                                user ? <button onClick={handleLogout}>Logout</button>
+                                    : <Link to={'/login'}> <button>Sign In</button></Link>
+                            }
+
+
                         </div>
                         <div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
@@ -79,7 +105,6 @@ const Navbar = () => {
                                     </a>
                                 </li>
                                 <li><a>Settings</a></li>
-                                <li><a>Logout</a></li>
                             </ul>
                         </div>
                     </div>

@@ -1,10 +1,11 @@
 import bgImage from '../../assets/assets/reservation/wood-grain-pattern-gray1x.png'
 import authImage from '../../assets/assets/others/authentication2.png'
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { GlobalContext } from '../../Provider/AuthProvider';
+
 
 const Login = () => {
 
@@ -12,6 +13,10 @@ const Login = () => {
 
     const captchaRef = useRef(null)
     const [disabled , setDisabled]= useState(true)
+    const navigate = useNavigate()
+    const location = useLocation()
+
+    const from = location.state?.from?.pathname || '/'
 
     const handleLogin =(e)=>{
        e.preventDefault()
@@ -20,7 +25,11 @@ const Login = () => {
         const password =  form.password.value;
 
         loginHandler(email, password)
-        .then(result => result.user)
+        .then(result => {
+            const user = result.user;
+            console.log(user)
+            navigate(from ,{ replace: true })
+        })
         .catch(err => console.error('error', err))
     }
 
@@ -79,7 +88,8 @@ const Login = () => {
                                 </div>
 
                                 <div className="form-control mt-6">
-                                    <button disabled={disabled} className="btn  bg-[#D1A054] bg-opacity-70 text-white">Sign In</button>
+                                    {/* todo: reenable after */}
+                                    <button disabled={false} className="btn  bg-[#D1A054] bg-opacity-70 text-white">Sign In</button>
                                 </div>
                             </form>
                             <div>
