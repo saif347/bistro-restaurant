@@ -2,7 +2,7 @@ import { FaTrash } from "react-icons/fa";
 import SectionTitle from "../../components/sectiontitle/SectionTitle";
 import useCart from "../../hooks/useCart";
 import Swal from "sweetalert2";
-import useAxios from "../../hooks/useAxios/useAxios";
+import useAxios from "../../hooks/useAxios";
 
 
 const MyCart = () => {
@@ -82,7 +82,7 @@ const MyCart = () => {
                                 </td>
                                 <td>{item.price}$</td>
                                 <th>
-                                    <button onClick={() => handleDelete(item._id)} className="btn btn-ghost btn-xs"><FaTrash></FaTrash></button>
+                                    <button onClick={() => handleDelete(item._id)} className="btn btn-ghost btn-xs "><FaTrash></FaTrash></button>
                                 </th>
                             </tr>)
                         }

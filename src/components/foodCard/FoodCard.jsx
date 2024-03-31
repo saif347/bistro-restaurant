@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import useAuth from '../../hooks/useAuth/useAuth';
 import Swal from 'sweetalert2';
 import { useLocation, useNavigate } from 'react-router-dom';
-import useAxios from '../../hooks/useAxios/useAxios';
+import useAxios from '../../hooks/useAxios';
 import useCart from '../../hooks/useCart';
 
 const FoodCard = ({ item }) => {

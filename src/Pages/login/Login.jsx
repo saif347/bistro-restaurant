@@ -5,11 +5,13 @@ import { Helmet } from 'react-helmet-async';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { GlobalContext } from '../../Provider/AuthProvider';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
 
 
 const Login = () => {
 
-    const {loginHandler}= useContext(GlobalContext)
+    const {loginHandler, googleLogin}= useContext(GlobalContext)
+    const axiosPublic = useAxiosPublic()
 
     const captchaRef = useRef(null)
     const [disabled , setDisabled]= useState(true)
@@ -46,6 +48,23 @@ const Login = () => {
     useEffect(() => {
         loadCaptchaEnginge(6);
     }, [])
+
+    const handleGoogleLogin= () =>{
+        googleLogin()
+        .then(res =>{
+           const userInfo = {
+            name: res.user?.displayName,
+            email: res.user?.email
+           }
+           axiosPublic.post('/user', userInfo)
+           .then(res=>{
+            console.log(res.data)
+           })
+            navigate('/')
+        })
+        .catch(err=>console.error("Error", err));
+
+    }
     return (
         <div className='min-h-screen flex items-center justify-center' style={{ backgroundImage: `url(${bgImage})` }}>
             <Helmet>
@@ -97,7 +116,7 @@ const Login = () => {
 
                                 <div className='space-x-5 text-center mt-2'>
                                     <p className='text-center mb-3'>Or Sign in With</p>
-                                    <button className='btn btn-circle btn-outline'>G</button>
+                                    <button onClick={handleGoogleLogin} className='btn btn-circle btn-outline'>G</button>
                                     <button className='btn btn-circle btn-outline'>F</button>
                                     <button className='btn btn-circle btn-outline'>T</button>
 

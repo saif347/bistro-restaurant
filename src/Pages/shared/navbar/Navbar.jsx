@@ -12,7 +12,7 @@ import useCart from "../../../hooks/useCart";
 const Navbar = () => {
     const [showMenu, setShowMenu] = useState(false);
     const { logOut, user } = useContext(GlobalContext)
-    const [cart]= useCart()
+    const [cart] = useCart()
     const links = <>
         <li className="nav-link"><NavLink to={'/'}>Home</NavLink></li>
         <li className="nav-link"><NavLink to={'contact'}>Contact Us</NavLink></li>
@@ -75,7 +75,7 @@ const Navbar = () => {
                             <span className="font-bold text-lg">8 Items</span>
                             <span className="text-info">Subtotal: $999</span>
                             <div className="card-actions">
-                                <button className="btn btn-block">View cart</button>
+                                <Link to={'/dashboard/cart'}><button className="btn btn-block">View cart</button></Link>
                             </div>
                         </div>
                     </div>
@@ -94,7 +94,12 @@ const Navbar = () => {
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
 
                                 <div className="w-8 md:w-10 lg:w-10 rounded-full">
-                                    <img alt="Tailwind CSS Navbar component" src={profile} />
+                                    {
+                                        user?.photoURL ? <img src={user?.photoURL} alt="" /> :
+                                            <img alt="Tailwind CSS Navbar component" src={profile} />
+                                    }
+
+
                                 </div>
                             </div>
                             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 text-neutral">

@@ -1,17 +1,21 @@
 import bgImage from '../../assets/assets/reservation/wood-grain-pattern-gray1x.png'
 import authImage from '../../assets/assets/others/authentication2.png'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useContext } from 'react';
 import { GlobalContext } from '../../Provider/AuthProvider';
+import Swal from 'sweetalert2';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
 
 const Register = () => {
+    const axiosPublic = useAxiosPublic()
+    const navigate = useNavigate()
 
     const {createUser}= useContext(GlobalContext)
     const handleRegister =e=>{
         e.preventDefault()
         const form = e.target;
-        // const name = form.name.value;
+        const name = form.name.value;
         const email = form.email.value;
         const password =  form.password.value;
 
@@ -20,6 +24,24 @@ const Register = () => {
         .then(res=>{
             const loggedUser = res.user;
             console.log(loggedUser)
+            const userInfo = {
+                name: name,
+                email: email
+            }
+            axiosPublic.post(`/user`, userInfo)
+            .then((res)=>{
+                if(res.data.insertedId){
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "user created successfully",
+                        showConfirmButton: false,
+                        timer: 1500
+                      });
+                }
+                form.reset()
+                navigate('/')
+            })
         })
         .catch(err =>{
             console.error(err);
