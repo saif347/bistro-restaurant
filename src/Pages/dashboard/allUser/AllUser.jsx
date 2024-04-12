@@ -34,7 +34,7 @@ const AllUser = () => {
                             Swal.fire({
                                 position: "top-end",
                                 icon: "success",
-                                title: ` is admin now`,
+                                title: `${user?.name} is admin now`,
                                 showConfirmButton: false,
                                 timer: 1500
                             });

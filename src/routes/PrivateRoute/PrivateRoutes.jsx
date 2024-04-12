@@ -11,7 +11,7 @@ const PrivateRoutes = ({children}) => {
         return <span className="loading loading-dots loading-md"></span>
     }
 
-    if(user){
+    if(user?.email){
         return children
     }
     return <Navigate to={'/login'} state={{from: location}} replace></Navigate>
